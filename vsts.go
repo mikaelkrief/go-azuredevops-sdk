@@ -2,10 +2,11 @@ package azuredevopssdk
  
 import "fmt"
 import "net/http"
-// import "encoding/json"
+import "encoding/json"
 import "io/ioutil"
 import "encoding/base64"
 import "time"
+import "bytes"
 
 const baseURL string = "https://dev.azure.com/"
  
@@ -55,7 +56,28 @@ func (s *Client) doRequest(req *http.Request) ([]byte, error) {
 	return body, nil
 }
 
+func (s *Client) CreateProject(project Project) (string, error) {
+	var a [1]interface{}
+	a[0] = project
+	projectBytes, _ := json.Marshal(a)
+	projectReader := bytes.NewReader(projectBytes)
+	url := fmt.Sprintf(baseURL+"%s/%s/_apis/projects?api-version=5.0-preview.3")
+	fmt.Println(url)
+	req, err := http.NewRequest("POST", url, projectReader)
+	if err != nil {
+		return "", err
+	}
+	bytes, err := s.doRequest(req)
+	if err != nil {
+		return "", err
+	}
 
+	var resp RespProject
+	json.Unmarshal(bytes, &resp)
+	return resp.Id, nil
+}
+
+/*
 func (s *Client) GetBuildDefinitions(project string) ([]byte, error) {
 	url := fmt.Sprintf(baseURL+"%s/%s/_apis/build/definitions?api-version=5.0-preview.7", s.organization, project)
 	fmt.Println(url)
@@ -69,6 +91,7 @@ func (s *Client) GetBuildDefinitions(project string) ([]byte, error) {
 	}
 	return bytes, nil
 }
+*/
 
 /*func (s *Client) AddTodo(todo *Todo) error {
 	url := fmt.Sprintf(baseURL+"/%s/todos", s.Username)

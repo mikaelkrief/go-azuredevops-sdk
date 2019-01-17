@@ -22,7 +22,7 @@ func NewClientWith(organization string, token string) (*Client, error) {
 		Timeout: time.Second * 10,
 	}
 	
-	return &Client{netClient, organization, basicAuth(token)}, nil
+	return &Client{netClient, organization, basicAuth(":"+token)}, nil
 }
 
 

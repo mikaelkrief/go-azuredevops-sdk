@@ -1,26 +1,76 @@
-package myservice
+package azuredevopssdk
  
-const baseURL string = "https://www.myservice.com/v1"
+import "fmt"
+import "net/http"
+// import "encoding/json"
+import "io/ioutil"
+import "encoding/base64"
+import "time"
+
+const baseURL string = "https://dev.azure.com/"
  
 type Client struct {
-	Username string
-	Password string
-}
- 
-func NewBasicAuthClient(username, password string) *Client {
-	return &Client{
-		Username: username,
-		Password: password,
-	}
+	client *http.Client
+	organization string
+	encToken string
 }
 
-type Todo struct {
-	ID      int    `json:"id"`
-	Content string `json:"content"`
-	Done    bool   `json:"done"`
+
+
+func NewClientWith(organization string, token string) (*Client, error) {
+	var netClient = &http.Client{
+		Timeout: time.Second * 10,
+	}
+	
+	return &Client{netClient, organization, basicAuth(token)}, nil
 }
- 
-func (s *Client) AddTodo(todo *Todo) error {
+
+
+
+func basicAuth(token string) string {
+	auth := token
+	return base64.StdEncoding.EncodeToString([]byte(auth))
+}
+
+func (s *Client) doRequest(req *http.Request) ([]byte, error) {
+	req.Header.Add("Authorization","Basic " + s.encToken)
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	// fmt.Println(resp.StatusCode)
+	if 200 != resp.StatusCode {
+		if  resp.StatusCode == 203 {
+			return nil, fmt.Errorf("%s", "BAD TOKEN")
+		}else{
+			return nil, fmt.Errorf("%s", body)
+		}
+	}
+	return body, nil
+}
+
+
+func (s *Client) GetBuildDefinitions(project string) ([]byte, error) {
+	url := fmt.Sprintf(baseURL+"%s/%s/_apis/build/definitions?api-version=5.0-preview.7", s.organization, project)
+	fmt.Println(url)
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+	bytes, err := s.doRequest(req)
+	if err != nil {
+		return nil, err
+	}
+	return bytes, nil
+}
+
+/*func (s *Client) AddTodo(todo *Todo) error {
 	url := fmt.Sprintf(baseURL+"/%s/todos", s.Username)
 	fmt.Println(url)
 	j, err := json.Marshal(todo)
@@ -33,43 +83,4 @@ func (s *Client) AddTodo(todo *Todo) error {
 	}
 	_, err = s.doRequest(req)
 	return err
-}
-
-
-func (s *Client) doRequest(req *http.Request) ([]byte, error) {
-	req.SetBasicAuth(s.Username, s.Password)
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-	if 200 != resp.StatusCode {
-		return nil, fmt.Errorf("%s", body)
-	}
-	return body, nil
-}
-
-
-
-func (s *Client) GetTodo(id int) (*Todo, error) {
-	url := fmt.Sprintf(baseURL+"/%s/todos/%d", s.Username, id)
-	req, err := http.NewRequest("GET", url, nil)
-	if err != nil {
-		return nil, err
-	}
-	bytes, err := s.doRequest(req)
-	if err != nil {
-		return nil, err
-	}
-	var data Todo
-	err = json.Unmarshal(bytes, &data)
-	if err != nil {
-		return nil, err
-	}
-	return &data, nil
-}
+}*/

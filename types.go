@@ -7,9 +7,9 @@ type BuildDefinition struct {
 }
 
 type Project struct {
-	Id			string	`json:"id"`
-	Name    	string	`json:"name"`
-	Description string	`json:"description"`
+	Id				string	`json:"id"`
+	Name    		string	`json:"name"`
+	Description 	string	`json:"description"`
 	Capabilities	Capabilities `json:"capabilities"`
 }
 
@@ -29,6 +29,6 @@ type ProcessTemplate struct {
 type RespProject struct {
 	Id			string	`json:"id"`
 	Status    	string	`json:"status"`
-	Url string	`json:"url"`
+	Url 		string	`json:"url"`
 	
 }

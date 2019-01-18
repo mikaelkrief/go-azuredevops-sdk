@@ -60,6 +60,7 @@ func (s *Client) doRequest(req *http.Request) ([]byte, error) {
 func (s *Client) CreateProject(project Project) (string, error) {
 	var a [1]interface{}
 	a[0] = project
+	fmt.Println(project)
 	projectBytes, _ := json.Marshal(a)
 	projectReader := bytes.NewReader(projectBytes)
 	url := fmt.Sprintf(baseURL+"%s/_apis/projects?api-version=5.0-preview.3",s.organization)

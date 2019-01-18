@@ -44,6 +44,7 @@ func (s *Client) doRequest(req *http.Request) ([]byte, error) {
 	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
+	log.Printf(body)
 	if err != nil {
 		return nil, err
 	}

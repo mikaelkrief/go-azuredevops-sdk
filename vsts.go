@@ -46,6 +46,11 @@ func (s *Client) doRequest(req *http.Request) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	if 202 == resp.StatusCode {
+		return body, nil
+	}
+
 	// fmt.Println(resp.StatusCode)
 	if 200 != resp.StatusCode {
 		if  resp.StatusCode == 203 {

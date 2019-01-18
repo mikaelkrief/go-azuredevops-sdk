@@ -64,6 +64,11 @@ func (s *Client) doRequest(req *http.Request) ([]byte, error) {
 	return body, nil
 }
 
+func (s *Client) ShowProject(project Project) (string, error) {
+	log.Printf(project.Description)
+}
+
+
 func (s *Client) CreateProject(project Project) (string, error) {
 	var a [1]interface{}
 	a[0] = project

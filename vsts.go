@@ -64,7 +64,7 @@ func (s *Client) doRequest(req *http.Request) ([]byte, error) {
 	return body, nil
 }
 
-func (s *Client) ShowProject(project Project) (string, error) {
+func (s *Client) ShowProject(project Project) {
 	log.Printf(project.Description)
 }
 

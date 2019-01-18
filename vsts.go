@@ -61,7 +61,7 @@ func (s *Client) CreateProject(project Project) (string, error) {
 	a[0] = project
 	projectBytes, _ := json.Marshal(a)
 	projectReader := bytes.NewReader(projectBytes)
-	url := fmt.Sprintf(baseURL+"%s/%s/_apis/projects?api-version=5.0-preview.3")
+	url := fmt.Sprintf(baseURL+"%s/_apis/projects?api-version=5.0-preview.3",s.organization)
 	fmt.Println(url)
 	req, err := http.NewRequest("POST", url, projectReader)
 	if err != nil {

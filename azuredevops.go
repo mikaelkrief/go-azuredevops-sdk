@@ -108,7 +108,7 @@ func (s *Client) GetOperation(id string) (string, error) {
 		return "", err
 	}
 
-	var resp RespProject
+	var resp RespOperation
 	json.Unmarshal(bytes, &resp)
-	return resp.Id, nil
+	return resp.Status, nil
 }

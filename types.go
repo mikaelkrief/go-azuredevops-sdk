@@ -32,3 +32,10 @@ type RespProject struct {
 	Url 		string	`json:"url"`
 	
 }
+
+type RespOperation struct {
+	Id			string	`json:"id"`
+	Status    	string	`json:"status"`
+	Url 		string	`json:"url"`
+	
+}

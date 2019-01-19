@@ -92,11 +92,11 @@ func (s *Client) CreateProject(project Project) (string, error) {
 }
 
 func (s *Client) GetOperation(id string) (string, error) {
-	var a [1]interface{}
-	a[0] = id
+	//var a [1]interface{}
+	//a[0] = id
 	
-	opBytes, _ := json.Marshal(a[0])
-	opReader := bytes.NewReader(opBytes)
+	//opBytes, _ := json.Marshal(a[0])
+	//opReader := bytes.NewReader(opBytes)
 	url := fmt.Sprintf(baseURL+"%s/_apis/operations/%s?api-version=5.0-preview.3",s.organization,id)
 	log.Printf(url)
 	req, err := http.NewRequest("GET", url, nil)

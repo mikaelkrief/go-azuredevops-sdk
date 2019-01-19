@@ -35,6 +35,7 @@ func basicAuth(token string) string {
 }
 
 func (s *Client) doRequest(req *http.Request) ([]byte, error) {
+	log.Printf("[SECRET] --> " + s.encToken)
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Add("Authorization","Basic " + s.encToken)
 	client := &http.Client{}

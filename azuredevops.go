@@ -98,7 +98,7 @@ func (s *Client) GetOperation(id string) (string, error) {
 	
 	//opBytes, _ := json.Marshal(a[0])
 	//opReader := bytes.NewReader(opBytes)
-	url := fmt.Sprintf(baseURL+"%s/_apis/operations/%s?api-version=5.0-preview.3",s.organization,id)
+	url := fmt.Sprintf(baseURL+"%s/_apis/operations/%s?api-version=4.1",s.organization,id)
 	log.Printf(url)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {

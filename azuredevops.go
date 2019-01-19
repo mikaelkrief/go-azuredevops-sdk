@@ -91,33 +91,24 @@ func (s *Client) CreateProject(project Project) (string, error) {
 	return resp.Id, nil
 }
 
-/*
-func (s *Client) GetBuildDefinitions(project string) ([]byte, error) {
-	url := fmt.Sprintf(baseURL+"%s/%s/_apis/build/definitions?api-version=5.0-preview.7", s.organization, project)
-	fmt.Println(url)
+func (s *Client) GetOperation(id string) (string, error) {
+	var a [1]interface{}
+	a[0] = id
+	
+	opBytes, _ := json.Marshal(a[0])
+	opReader := bytes.NewReader(opBytes)
+	url := fmt.Sprintf(baseURL+"%s/_apis/operations/%s?api-version=5.0-preview.3",s.organization,id)
+	log.Printf(url)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 	bytes, err := s.doRequest(req)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
-	return bytes, nil
-}
-*/
 
-/*func (s *Client) AddTodo(todo *Todo) error {
-	url := fmt.Sprintf(baseURL+"/%s/todos", s.Username)
-	fmt.Println(url)
-	j, err := json.Marshal(todo)
-	if err != nil {
-		return err
-	}
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(j))
-	if err != nil {
-		return err
-	}
-	_, err = s.doRequest(req)
-	return err
-}*/
+	var resp RespProject
+	json.Unmarshal(bytes, &resp)
+	return resp.Id, nil
+}

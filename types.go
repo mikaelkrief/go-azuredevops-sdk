@@ -1,10 +1,5 @@
 package azuredevopssdk
 
-type BuildDefinition struct {
-	ID      int    `json:"id"`
-	name 	string `json:"name"`
-	path    string  `json:"path"`
-}
 
 type Project struct {
 	Id				string	`json:"id"`
@@ -32,12 +27,10 @@ type ResponseProject struct {
 	Id			string	`json:"id"`
 	Status    	string	`json:"status"`
 	Url 		string	`json:"url"`
-	
 }
 
 type ResponseOperation struct {
 	Id			string	`json:"id"`
 	Status    	string	`json:"status"`
 	Url 		string	`json:"url"`
-	
 }

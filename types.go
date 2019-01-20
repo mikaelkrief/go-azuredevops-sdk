@@ -10,6 +10,8 @@ type Project struct {
 	Id				string	`json:"id"`
 	Name    		string	`json:"name"`
 	Description 	string	`json:"description"`
+	Abbreviation    string	`json:"abbreviation"`
+	Visibility 		string	`json:"visibility"`
 	Capabilities	Capabilities `json:"capabilities"`
 }
 
@@ -26,14 +28,14 @@ type ProcessTemplate struct {
 	TemplateTypeId	string `json:"templateTypeId"`
 }
 
-type RespProject struct {
+type ResponseProject struct {
 	Id			string	`json:"id"`
 	Status    	string	`json:"status"`
 	Url 		string	`json:"url"`
 	
 }
 
-type RespOperation struct {
+type ResponseOperation struct {
 	Id			string	`json:"id"`
 	Status    	string	`json:"status"`
 	Url 		string	`json:"url"`

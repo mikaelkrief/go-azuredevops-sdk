@@ -10,16 +10,16 @@ type Project struct {
 }
 
 type Capabilities struct {
-	Versioncontrol Versioncontrol `json:"versioncontrol"`
-	ProcessTemplate ProcessTemplate `json:"processTemplate"`
+	Versioncontrol Versioncontrol `json:"versioncontrol,omitempty"`
+	ProcessTemplate ProcessTemplate `json:"processTemplate,omitempty"`
 }
 
 type Versioncontrol struct {
-	SourceControlType string `json:"sourceControlType"`
+	SourceControlType string `json:"sourceControlType,omitempty"`
 }
 
 type ProcessTemplate struct {
-	TemplateTypeId	string `json:"templateTypeId"`
+	TemplateTypeId	string `json:"templateTypeId,omitempty"`
 }
 
 type ResponseProject struct {

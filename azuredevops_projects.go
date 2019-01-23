@@ -48,7 +48,7 @@ func (s *Client) UpdateProject(projectid string, projectUpdated Project) (string
 
 	var resp ResponseProject
 	json.Unmarshal(bytes, &resp)
-	return resp.Id, nil
+	return projectid, nil
 }
 
 func (s *Client) GetProject(name string) (string, error) {

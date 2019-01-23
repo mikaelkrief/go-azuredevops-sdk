@@ -2,7 +2,7 @@ package azuredevopssdk
 
 
 type Project struct {
-	Id				string	`json:"id"`
+	Id				string	`json:"id,omitempty"`
 	Name    		string	`json:"name"`
 	Description 	string	`json:"description"`
 	Visibility 		string	`json:"visibility"`

@@ -6,7 +6,7 @@ type Project struct {
 	Name    		string	`json:"name"`
 	Description 	string	`json:"description"`
 	Visibility 		string	`json:"visibility"`
-	Capabilities	*Capabilities `json:"capabilities,omitempty"`
+	Capabilities	Capabilities `json:"capabilities,omitempty"`
 }
 
 type Capabilities struct {

@@ -5,7 +5,6 @@ type Project struct {
 	Id				string	`json:"id"`
 	Name    		string	`json:"name"`
 	Description 	string	`json:"description"`
-	Abbreviation    string	`json:"abbreviation"`
 	Visibility 		string	`json:"visibility"`
 	Capabilities	Capabilities `json:"capabilities"`
 }

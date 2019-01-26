@@ -1,14 +1,21 @@
 package azuredevopssdk
 
 type Project struct {
-	Id           string        `json:"id,omitempty"`
-	Name         string        `json:"name"`
-	Description  string        `json:"description"`
-	Visibility   string        `json:"visibility,omitempty"`
-	Capabilities *Capabilities `json:"capabilities,omitempty"`
+	Id           string `json:"id,omitempty"`
+	Name         string `json:"name"`
+	Description  string `json:"description"`
+	Visibility   string `json:"visibility,omitempty"`
+	Capabilities *struct {
+		Versioncontrol struct {
+			SourceControlType string `json:"sourceControlType,omitempty"`
+		} `json:"versioncontrol,omitempty"`
+		ProcessTemplate struct {
+			TemplateTypeId string `json:"templateTypeId,omitempty"`
+		} `json:"processTemplate,omitempty"`
+	} `json:"capabilities,omitempty"`
 }
 
-type Capabilities struct {
+/*type Capabilities struct {
 	Versioncontrol  Versioncontrol  `json:"versioncontrol,omitempty"`
 	ProcessTemplate ProcessTemplate `json:"processTemplate,omitempty"`
 }
@@ -19,7 +26,7 @@ type Versioncontrol struct {
 
 type ProcessTemplate struct {
 	TemplateTypeId string `json:"templateTypeId,omitempty"`
-}
+}*/
 
 //ResponseProject
 type ResponseProject struct {

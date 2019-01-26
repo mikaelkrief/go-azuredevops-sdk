@@ -51,7 +51,7 @@ func (s *Client) UpdateProject(projectid string, projectUpdated Project) (string
 }
 
 func (s *Client) GetProject(name string) (Project, error) {
-	url := fmt.Sprintf(baseURL+"%s/_apis/projects/%s?includeCapabilities=tru&api-version=5.0-preview.3", s.organization, name)
+	url := fmt.Sprintf(baseURL+"%s/_apis/projects/%s?includeCapabilities=true&api-version=5.0-preview.3", s.organization, name)
 	log.Printf(url)
 	var project Project
 	req, err := http.NewRequest("GET", url, nil)
@@ -64,5 +64,14 @@ func (s *Client) GetProject(name string) (Project, error) {
 	}
 
 	json.Unmarshal(bytes, &project)
+	// log.Printf("project: %+v\n", project)
 	return project, nil
+}
+
+func PrettyPrint(v interface{}) (err error) {
+	b, err := json.MarshalIndent(v, "", "  ")
+	if err == nil {
+		log.Println(string(b))
+	}
+	return
 }

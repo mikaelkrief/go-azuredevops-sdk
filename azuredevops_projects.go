@@ -68,6 +68,25 @@ func (s *Client) GetProject(name string) (Project, error) {
 	return project, nil
 }
 
+
+func (s *Client) DeleteProject(projectid string) (string, error) {
+
+	url := fmt.Sprintf(baseURL+"%s/_apis/projects/%s?api-version=5.0-preview.3", s.organization, projectid)
+	log.Printf(url)
+	req, err := http.NewRequest("DELETE", url, nil)
+	if err != nil {
+		return "", err
+	}
+	bytes, err := s.doRequest(req)
+	if err != nil {
+		return "", err
+	}
+
+	var resp ResponseProject
+	json.Unmarshal(bytes, &resp)
+	return resp.Id, nil
+}
+
 func PrettyPrint(v interface{}) (err error) {
 	b, err := json.MarshalIndent(v, "", "  ")
 	if err == nil {

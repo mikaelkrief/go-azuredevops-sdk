@@ -1,5 +1,5 @@
 package azuredevopssdk
- 
+
 import "fmt"
 import "log"
 import "net/http"
@@ -8,24 +8,20 @@ import "encoding/base64"
 import "time"
 
 const baseURL string = "https://dev.azure.com/"
- 
+
 type Client struct {
-	client *http.Client
+	client       *http.Client
 	organization string
-	encToken string
+	encToken     string
 }
-
-
 
 func NewClientWith(organization string, token string) (*Client, error) {
 	var netClient = &http.Client{
 		Timeout: time.Second * 10,
 	}
-	
-	return &Client{netClient, organization, basicAuth(":"+token)}, nil
+
+	return &Client{netClient, organization, basicAuth(":" + token)}, nil
 }
-
-
 
 func basicAuth(token string) string {
 	auth := token
@@ -35,7 +31,7 @@ func basicAuth(token string) string {
 func (s *Client) doRequest(req *http.Request) ([]byte, error) {
 	log.Printf("[SECRET] --> " + s.encToken)
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Add("Authorization","Basic " + s.encToken)
+	req.Header.Add("Authorization", "Basic "+s.encToken)
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
@@ -43,7 +39,7 @@ func (s *Client) doRequest(req *http.Request) ([]byte, error) {
 	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
-	// log.Printf(body)
+
 	if err != nil {
 		return nil, err
 	}
@@ -54,13 +50,11 @@ func (s *Client) doRequest(req *http.Request) ([]byte, error) {
 
 	// fmt.Println(resp.StatusCode)
 	if 200 != resp.StatusCode {
-		if  resp.StatusCode == 203 {
+		if resp.StatusCode == 203 {
 			return nil, fmt.Errorf("%s", "BAD TOKEN")
-		}else{
+		} else {
 			return nil, fmt.Errorf("%s", body)
 		}
 	}
 	return body, nil
 }
-
-

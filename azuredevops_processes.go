@@ -8,9 +8,10 @@ import (
 	"strings"
 )
 
+//GetProcessTemplateList : get the template list
 func (s *Client) GetProcessTemplateList() ([]Processe, error) {
 	url := fmt.Sprintf(baseURL+"%s/_apis/process/processes?api-version=5.0-preview.1", s.organization)
-	log.Printf(url)
+	log.Printf("[URL]: %+v", url)
 	var templateProcessList Processes
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -30,6 +31,7 @@ func (s *Client) GetProcessTemplateList() ([]Processe, error) {
 	return templateProcessList.ProcesseList, nil
 }
 
+//GetDefaultProcess : get the default process
 func (s *Client) GetDefaultProcess() (*Processe, error) {
 
 	processes, err := s.GetProcessTemplateList()
@@ -48,6 +50,7 @@ func (s *Client) GetDefaultProcess() (*Processe, error) {
 
 }
 
+//GetProcessId : get thr process if by name
 func (s *Client) GetProcessId(name string) (Processe, error) {
 
 	var _process Processe

@@ -51,21 +51,22 @@ func (s *Client) GetDefaultProcess() (*Processe, error) {
 }
 
 //GetProcessId : get thr process if by name
-func (s *Client) GetProcessId(name string) (Processe, error) {
+func (s *Client) GetProcessId(name string) (*Processe, error) {
 
 	var _process Processe
 	processes, err := s.GetProcessTemplateList()
 
 	if err != nil {
-		return _process, err
+		return &_process, err
 	}
 
 	for index := 0; index < len(processes); index++ {
 		if strings.ToLower(name) == strings.ToLower(processes[index].Name) {
 			process := processes[index]
-			return process, nil
+			return &process, nil
 		}
 	}
-	return _process, nil
+
+	return nil, fmt.Errorf("Error the template process %+v doesn't exist", name)
 
 }

@@ -68,7 +68,6 @@ func (s *Client) GetProject(name string) (Project, error) {
 	return project, nil
 }
 
-
 func (s *Client) DeleteProject(projectid string) (string, error) {
 
 	url := fmt.Sprintf(baseURL+"%s/_apis/projects/%s?api-version=5.0-preview.3", s.organization, projectid)

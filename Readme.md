@@ -30,7 +30,7 @@ If you need to install Go, follow [the official instructions](https://golang.org
 
 ## Implemented Resources :
 
-- Project
-- Process template
-- Operation
+- Core
+- Build
+
 
